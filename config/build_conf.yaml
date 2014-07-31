@@ -31,6 +31,8 @@ system:
     - 'errors.yaml'
     - 'sphinx-local.yaml'
     - 'robots.yaml'
+    - 'corpora.yaml'
+    - 'translate.yaml'
     - images: '/source/images/metadata.yaml'
     - includes: '/source/includes/metadata.yaml'
   tools:
