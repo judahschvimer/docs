@@ -2,12 +2,18 @@ ref: _command-secondary-into-recovering
 content: |
 
 
-  - On secondaries, the {{cmdName}} command forces the secondary to
-    enter :replstate:`RECOVERING` state. Read operations issued to an
-    instance in the :replstate:`RECOVERING` state will fail.  This
-    prevents clients from reading during the operation. When the
-    operation completes, the secondary returns
-    to :replstate:`SECONDARY` state.
+  - When a node receives a ``replSetMaintenance: true`` request, it
+    adds a maintenance mode task to a queue of tasks. If the queue of
+    tasks was empty and now is not, the node will transition to
+    ``RECOVERING`` state and begin to reject read requests. When a node
+    receives a ``replSetMaintenance: false`` request, it removes a
+    maintenance mode task from the queue (even if that task was
+    initiated by a different client). If the request empties 
+    the maintenance mode task queue, the node will return to 
+    ``SECONDARY`` state.
+    
+  - If you want to prevent a node from servicing reads, consider using
+    :doc:`/core/replica-set-hidden-member` instead.
 
   - See :doc:`/reference/replica-states/` for more information about
     replica set member states.
